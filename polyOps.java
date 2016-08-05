@@ -90,7 +90,7 @@ class Polynomial
                for(int j=0;j<poly2_terms.size();j++)
                {
                  int key=poly1_terms.get(i).pow*poly2_terms.get(j).pow;
-                 int value=poly1_terms.get(i).coeff*poly2_terms.get(j).coeff;
+                 double value=poly1_terms.get(i).coeff*poly2_terms.get(j).coeff;
                  if(multi.containsKey(key))
                      {
                        multi.put(key , multi.get(key)+value);
@@ -98,7 +98,7 @@ class Polynomial
                  else multi.put(key , value);
                }
              }
-             for (Map.Entry<int, double> entry : multi.entrySet()) 
+             for (Map.Entry<Integer, Double> entry : multi.entrySet()) 
              {
                  
                  result.add(entry.getValue(),entry.getKey());
@@ -107,7 +107,70 @@ class Polynomial
              return result;
 
          }
+		public String toString()
+	{
+		String output = "";
+		double coeff;
+		int pow;
+		ArrayList<PolyTerm> polynomial = this.polynomial;
+		for(int i=0; i<polynomial.size(); i++)
+		{
+			coeff = polynomial.get(i).coeff;
+			pow = polynomial.get(i).pow;
+			if(pow == 0)
+			{
+				if(coeff<0)
+					output += coeff+" ";
+				else
+					output += "+ "+coeff+" ";
+			}
+			else
+			{
+				if(coeff<0)
+					output += coeff+"(x^"+pow+") ";
+				else
+					output += "+ "+coeff+"(x^"+pow+") ";
+			}
+		}
+		return output;
+	}
 
+	static Polynomial addition(Polynomial a, Polynomial b) {
+		// TODO Auto-generated method stub
+		
+		Polynomial result = new Polynomial();
+		PolyTerm polyterm1,polyterm2;
+		ArrayList<PolyTerm> polyterm_listA = a.polynomial;
+		ArrayList<PolyTerm> polyterm_listB = b.polynomial;
+		
+		for(int i=0; i<a.polynomial.size();i++)
+		{
+			polyterm1 = polyterm_listA.get(i);
+			polyterm2 = polyterm_listB.get(i);
+			
+			result.add(polyterm1.coeff + polyterm2.coeff,polyterm1.pow);
+		}
+		
+		return result;
+	}
+	
+	static Polynomial subtract(Polynomial a, Polynomial b) {
+		// TODO Auto-generated method stub
+		Polynomial result = new Polynomial();
+		PolyTerm polyterm1,polyterm2;
+		ArrayList<PolyTerm> polyterm_listA = a.polynomial;
+		ArrayList<PolyTerm> polyterm_listB = b.polynomial;
+		
+		for(int i=0; i<a.polynomial.size();i++)
+		{
+			polyterm1 = polyterm_listA.get(i);
+			polyterm2 = polyterm_listB.get(i);
+			
+			result.add(polyterm1.coeff - polyterm2.coeff,polyterm1.pow);
+		}
+		
+		return result;
+	}
 
 
 
